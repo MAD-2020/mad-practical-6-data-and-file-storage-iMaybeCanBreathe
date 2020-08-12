@@ -29,6 +29,7 @@ public class CustomScoreAdaptor extends RecyclerView.Adapter<CustomScoreViewHold
         /* Hint:
         This method dictates how the viewholder layuout is to be once the viewholder is created.
          */
+        return null; //temporary to test app
     }
 
     public void onBindViewHolder(CustomScoreViewHolder holder, final int position){
@@ -46,5 +47,6 @@ public class CustomScoreAdaptor extends RecyclerView.Adapter<CustomScoreViewHold
         /* Hint:
         This method returns the the size of the overall data.
          */
+        return 0; //temporary to test app
     }
 }

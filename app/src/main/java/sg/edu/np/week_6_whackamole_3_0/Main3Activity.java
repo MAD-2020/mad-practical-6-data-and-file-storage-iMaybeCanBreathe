@@ -38,6 +38,8 @@ public class Main3Activity extends AppCompatActivity {
 
         Log.v(TAG, FILENAME + ": Show level for User: "+ userName);
          */
+        String userName = getIntent().getExtras().getString("username");
+        Log.v(TAG, FILENAME + ": Show level for User: "+ userName);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -41,8 +42,50 @@ public class Main2Activity extends AppCompatActivity {
 
             Log.v(TAG, FILENAME + ": New user created successfully!");
             Log.v(TAG, FILENAME + ": User already exist during new user creation!");
-
          */
+        final EditText inputUsername = findViewById(R.id.inputUsername);
+        final EditText inputPassword = findViewById(R.id.inputPassword);
+        Button btnCreate = findViewById(R.id.btnCreate);
+        Button btnCancel = findViewById(R.id.btnCancel);
+        final MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+
+        btnCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String username = inputUsername.getText().toString();
+                final String password = inputPassword.getText().toString();
+                UserData user = dbHandler.findUser(username);
+                if (user != null){
+                    Log.v(TAG, FILENAME + ": User already exist during new user creation!");
+                    Toast.makeText(Main2Activity.this, "User already exists", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    ArrayList<Integer> levelList = new ArrayList<Integer>();
+                    ArrayList<Integer> scoreList = new ArrayList<Integer>();
+                    for(int i = 1; i <= 10; i++){
+                        levelList.add(i);
+                        scoreList.add(0);
+                    }
+                    UserData newUser = new UserData(username, password, levelList, scoreList);
+                    dbHandler.addUser(newUser);
+                    Log.v(TAG, FILENAME + ": New user created successfully!");
+                    Intent intent = new Intent(Main2Activity.this, Main3Activity.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, FILENAME + ": Cancelled!");
+                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     protected void onStop() {
